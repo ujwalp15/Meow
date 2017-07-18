@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         //this custom DrawerItem extends the PrimaryDrawerItem so it just overwrites some methods
                         new PrimaryDrawerItem().withName(R.string.drawer_item_breeds).withDescription("Supported cat breeds").withIcon(CommunityMaterial.Icon.cmd_cat).withIdentifier(2),
                         new SectionDrawerItem().withName(R.string.drawer_item_section_header),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_about).withIcon(GoogleMaterial.Icon.gmd_info_outline).withIdentifier(3),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_about).withIcon(GoogleMaterial.Icon.gmd_info_outline).withSelectable(false).withIdentifier(3),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withSelectedIconColor(Color.GRAY).withIconTintingEnabled(true).withIcon(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_account).actionBar().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withEnabled(false).withIdentifier(4),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(CommunityMaterial.Icon.cmd_help_circle_outline).withEnabled(false).withIdentifier(5),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_feedback).withIcon(FontAwesome.Icon.faw_paper_plane).withEnabled(false).withIdentifier(6)
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .addStickyDrawerItems(
                         new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(7),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_license).withIcon(GoogleMaterial.Icon.gmd_class).withIdentifier(8),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_license).withIcon(GoogleMaterial.Icon.gmd_class).withSelectable(false).withIdentifier(8),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(9)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .withSavedInstance(savedInstanceState)
                 .build();
+
     }
 
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
