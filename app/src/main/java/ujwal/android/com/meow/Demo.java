@@ -180,17 +180,26 @@ public class Demo {
                 "Android Iconics", "2016", "Mike Penz",
                 OpenSourceLicense.APACHE_2);
 
-        MaterialAboutCard leakCanaryLicenseCard = ConvenienceBuilder.createLicenseCard(c,
+        MaterialAboutCard PicassoLicenseCard = ConvenienceBuilder.createLicenseCard(c,
                 new IconicsDrawable(c)
                         .icon(GoogleMaterial.Icon.gmd_book)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18),
-                "LeakCanary", "2015", "Square, Inc",
+                "Picasso", "2013", "Square, Inc",
+                OpenSourceLicense.APACHE_2);
+
+        MaterialAboutCard cameraLicenseCard = ConvenienceBuilder.createLicenseCard(c,
+                new IconicsDrawable(c)
+                        .icon(GoogleMaterial.Icon.gmd_book)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18),
+                "material-camera", "2016", "Aidan Follestad",
                 OpenSourceLicense.APACHE_2);
 
         return new MaterialAboutList(materialAboutLibraryLicenseCard,
                 androidIconicsLicenseCard,
-                leakCanaryLicenseCard
+                PicassoLicenseCard,
+                cameraLicenseCard
                 );
     }
 }
