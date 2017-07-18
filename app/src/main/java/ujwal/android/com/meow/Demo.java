@@ -25,7 +25,7 @@ public class Demo {
         // Add items to card
 
         appCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
-                .text("AboutApp")
+                .text("Meow")
                 .icon(R.mipmap.ic_launcher)
                 .build());
 
@@ -49,7 +49,7 @@ public class Demo {
                         .icon(CommunityMaterial.Icon.cmd_history)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18))
-                .setOnClickAction(ConvenienceBuilder.createWebViewDialogOnClickAction(c, "Releases", "https://github.com/ujwalp15", true, false))
+                .setOnClickAction(ConvenienceBuilder.createWebViewDialogOnClickAction(c, "Releases", "https://github.com/ujwalp15/Meow", true, false))
                 .build());
 
         appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
@@ -92,7 +92,7 @@ public class Demo {
 
         MaterialAboutCard.Builder convenienceCardBuilder = new MaterialAboutCard.Builder();
 
-        convenienceCardBuilder.title("Convenience Builder");
+        convenienceCardBuilder.title("More");
         try {
             convenienceCardBuilder.addItem(ConvenienceBuilder.createVersionActionItem(c,
                     new IconicsDrawable(c)
@@ -112,7 +112,7 @@ public class Demo {
                         .sizeDp(18),
                 "Visit Website",
                 true,
-                Uri.parse("http://ujwalp15.github.io")));
+                Uri.parse("http://ujwalp.me")));
 
         convenienceCardBuilder.addItem(ConvenienceBuilder.createRateActionItem(c,
                 new IconicsDrawable(c)
@@ -132,24 +132,6 @@ public class Demo {
                 true,
                 "ujwalp09@gmail.com",
                 "Question concerning AboutApp"));
-
-        convenienceCardBuilder.addItem(ConvenienceBuilder.createPhoneItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_phone)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "Call me",
-                true,
-                "+91-9916637360"));
-
-        convenienceCardBuilder.addItem(ConvenienceBuilder.createMapItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_map)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "Visit Bangalore",
-                null,
-                "Yelahanka"));
 
         MaterialAboutCard.Builder otherCardBuilder = new MaterialAboutCard.Builder();
         otherCardBuilder.title("Other");

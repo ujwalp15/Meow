@@ -33,52 +33,7 @@ public class AboutActivity extends MaterialAboutActivity {
     @NonNull
     @Override
     protected MaterialAboutList getMaterialAboutList(@NonNull final Context c) {
-        MaterialAboutCard.Builder advancedCardBuilder = new MaterialAboutCard.Builder();
-        advancedCardBuilder.title("Advanced");
-
-        advancedCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
-                .text("TitleItem OnClickAction")
-                .icon(R.mipmap.ic_launcher)
-                .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("http://www.daniel-stone.uk")))
-                .build());
-
-        advancedCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("Snackbar demo")
-                .icon(new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_code_tags)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18))
-                .setOnClickAction(new MaterialAboutItemOnClickAction() {
-                    @Override
-                    public void onClick() {
-                        Snackbar.make(((MainActivity) c).findViewById(R.id.mal_material_about_activity_coordinator_layout), "Test", Snackbar.LENGTH_SHORT).show();
-                    }
-                })
-                .build());
-
-        advancedCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("OnLongClickAction demo")
-                .icon(new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_hand_pointing_right)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18))
-                .setOnLongClickAction(new MaterialAboutItemOnClickAction() {
-                    @Override
-                    public void onClick() {
-                        Toast.makeText(c, "Long pressed", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .build());
-
-        advancedCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("Custom Item")
-                .icon(new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_code_braces)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18))
-                .build());
-
-        return Demo.createMaterialAboutList(c, colorIcon, getIntent().getIntExtra(THEME_EXTRA, THEME_DARK_DARKBAR)).addCard(advancedCardBuilder.build());
+        return Demo.createMaterialAboutList(c, colorIcon, getIntent().getIntExtra(THEME_EXTRA, THEME_DARK_DARKBAR));
     }
 
     @Override
