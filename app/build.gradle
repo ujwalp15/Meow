@@ -21,7 +21,9 @@ android {
 
 allprojects {
     repositories {
+        jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     }
 }
 
@@ -37,12 +39,22 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.9.4@aar') {
         transitive = true
     }
+    // Material Icons
     compile 'com.mikepenz:iconics-core:2.8.7@aar'
     compile 'com.mikepenz:google-material-typeface:3.0.1.0.original@aar'
-    compile 'com.mikepenz:community-material-typeface:1.8.36.1@aar'
-    compile 'com.github.daniel-stoneuk:material-about-library:2.1.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.mikepenz:itemanimators:0.5.0@aar'
-    compile 'com.mikepenz:fontawesome-typeface:4.6.0.3@aar'
     compile 'com.mikepenz:community-material-typeface:1.9.32.2@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.6.0.3@aar'
+
+    // Material about library
+    compile 'com.github.daniel-stoneuk:material-about-library:2.1.0'
+
+    // Image loading
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Animations
+    compile 'com.mikepenz:itemanimators:0.5.0@aar'
+
+    // Material camera
+    compile 'com.afollestad:material-camera:0.4.4'
+
 }
