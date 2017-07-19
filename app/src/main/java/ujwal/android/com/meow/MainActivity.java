@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.drawable.header)
+                .withHeaderBackground(R.drawable.header_cat)
                 .withCompactStyle(compact)
                 .addProfiles(
                         profile,
