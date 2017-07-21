@@ -57,4 +57,7 @@ dependencies {
     // Material camera
     compile 'com.afollestad:material-camera:0.4.4'
 
+    // Material intro screen
+    compile 'agency.tango.android:material-intro-screen:0.0.5'
+
 }

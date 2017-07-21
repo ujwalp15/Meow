@@ -196,10 +196,19 @@ public class Demo {
                 "material-camera", "2016", "Aidan Follestad",
                 OpenSourceLicense.APACHE_2);
 
+        MaterialAboutCard introLicenseCard = ConvenienceBuilder.createLicenseCard(c,
+                new IconicsDrawable(c)
+                        .icon(GoogleMaterial.Icon.gmd_book)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18),
+                "material-intro-screen", "2016", "Tango Agency",
+                OpenSourceLicense.MIT);
+
         return new MaterialAboutList(materialAboutLibraryLicenseCard,
                 androidIconicsLicenseCard,
                 PicassoLicenseCard,
-                cameraLicenseCard
+                cameraLicenseCard,
+                introLicenseCard
                 );
     }
 }
