@@ -1,6 +1,7 @@
 package ujwal.android.com.meow;
 
 import android.animation.ObjectAnimator;
+import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -24,6 +26,11 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            getActionBar().setHomeButtonEnabled(true);
+        }
 
         final int smallResId = getIntent().getIntExtra(BUNDLE_IMAGE_ID, -1);
         if (smallResId == -1) {
@@ -92,12 +99,12 @@ public class DetailsActivity extends AppCompatActivity {
     private void loadFullSizeBitmap(int smallResId) {
         int bigResId;
         switch (smallResId) {
-            case R.drawable.p1: bigResId = R.drawable.p1_big; break;
-            case R.drawable.p2: bigResId = R.drawable.p2_big; break;
-            case R.drawable.p3: bigResId = R.drawable.p3_big; break;
-            case R.drawable.p4: bigResId = R.drawable.p4_big; break;
-            case R.drawable.p5: bigResId = R.drawable.p5_big; break;
-            default: bigResId = R.drawable.p1_big;
+            case R.drawable.persian: bigResId = R.drawable.persian; break;
+            case R.drawable.siamese: bigResId = R.drawable.siamese; break;
+            case R.drawable.burmese: bigResId = R.drawable.burmese; break;
+            case R.drawable.manx: bigResId = R.drawable.manx; break;
+            case R.drawable.abyssinian: bigResId = R.drawable.abyssinian; break;
+            default: bigResId = R.drawable.persian;
         }
 
         final DisplayMetrics metrics = new DisplayMetrics();
@@ -111,6 +118,18 @@ public class DetailsActivity extends AppCompatActivity {
             }
         };
         decodeBitmapTask.execute();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
