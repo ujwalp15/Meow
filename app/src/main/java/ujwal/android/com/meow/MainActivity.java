@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         //here we use a customPrimaryDrawerItem we defined in our sample app
                         //this custom DrawerItem extends the PrimaryDrawerItem so it just overwrites some methods
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_breeds).withDescription("Supported cat breeds").withIcon(CommunityMaterial.Icon.cmd_cat).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_breeds).withDescription("Supported cat breeds").withIcon(CommunityMaterial.Icon.cmd_cat).withSelectable(false).withIdentifier(2),
                         new SectionDrawerItem().withName(R.string.drawer_item_section_header),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_about).withIcon(GoogleMaterial.Icon.gmd_info_outline).withSelectable(false).withIdentifier(3),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withSelectedIconColor(Color.GRAY).withIconTintingEnabled(true).withIcon(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_account).actionBar().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withEnabled(false).withIdentifier(4),
@@ -108,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .addStickyDrawerItems(
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(7),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withEnabled(false).withIdentifier(7),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_license).withIcon(GoogleMaterial.Icon.gmd_class).withSelectable(false).withIdentifier(8),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(9)
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withEnabled(false).withIdentifier(9)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -123,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
 
                         if (drawerItem != null) {
                             Intent intent = null;
-                            if (drawerItem.getIdentifier() == 3) {
+                            if(drawerItem.getIdentifier()==2) {
+                                intent = new Intent(MainActivity.this,BreedsActivity.class);
+                            } else if (drawerItem.getIdentifier() == 3) {
                                 intent = new Intent(MainActivity.this, AboutActivity.class);
                             } else if (drawerItem.getIdentifier() == 8) {
                                 intent = new Intent(MainActivity.this, LicenseActivity.class);
