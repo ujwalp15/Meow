@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         // Create a few sample profile
-        profile = new ProfileDrawerItem().withName("Meow").withEmail("ujwalp09@gmail.com").withIcon(getResources().getDrawable(R.drawable.cat));
+        profile = new ProfileDrawerItem().withName("Meow").withEmail("Recognize Cat Breed").withIcon(getResources().getDrawable(R.drawable.cat));
 
         // Create the AccountHeader
         buildHeader(false, savedInstanceState);
@@ -163,30 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header_cat)
                 .withCompactStyle(compact)
-                .addProfiles(
-                        profile,
-                        //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
-                        new ProfileSettingDrawerItem()
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
-                        //sample usage of the onProfileChanged listener
-                        //if the clicked item has the identifier 1 add a new profile ;)
-                        if (profile instanceof IDrawerItem && ((IDrawerItem) profile).getIdentifier() == PROFILE_SETTING) {
-                            IProfile newProfile = new ProfileDrawerItem().withNameShown(true).withName("Batman").withEmail("batman@gmail.com").withIcon(getResources().getDrawable(R.drawable.cat));
-                            if (headerResult.getProfiles() != null) {
-                                //we know that there are 2 setting elements. set the new profile above them ;)
-                                headerResult.addProfile(newProfile, headerResult.getProfiles().size() - 2);
-                            } else {
-                                headerResult.addProfiles(newProfile);
-                            }
-                        }
-
-                        //false if you have not consumed the event and it should close the drawer
-                        return false;
-                    }
-                })
+                .addProfiles(profile)
                 .withSavedInstance(savedInstanceState)
                 .build();
     }
