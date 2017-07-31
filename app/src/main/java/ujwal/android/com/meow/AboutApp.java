@@ -17,7 +17,7 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
-public class Demo {
+public class AboutApp {
 
     public static MaterialAboutList createMaterialAboutList(final Context c, final int colorIcon, final int theme) {
         MaterialAboutCard.Builder appCardBuilder = new MaterialAboutCard.Builder();
@@ -82,12 +82,21 @@ public class Demo {
                 .build());
 
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("Fork on GitHub")
+                .text("Follow on GitHub")
                 .icon(new IconicsDrawable(c)
                         .icon(CommunityMaterial.Icon.cmd_github_circle)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18))
                 .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://github.com/ujwalp15")))
+                .build());
+
+        authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+                .text("Follow on Twitter")
+                .icon(new IconicsDrawable(c)
+                        .icon(CommunityMaterial.Icon.cmd_twitter_circle)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18))
+                .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://twitter.com/Ujwalp09")))
                 .build());
 
         MaterialAboutCard.Builder convenienceCardBuilder = new MaterialAboutCard.Builder();
@@ -154,7 +163,7 @@ public class Demo {
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18))
                 .text("Contributions")
-                .subTextHtml("We believe in <b>Open-Source</b> ideology. <br />Therefore, the <i>source</i> is readily available to work with. This gives other developers a chance to contribute to our project<br/>Remember that we accept only pull-requests")
+                .subTextHtml("I believe in <b>Open-Source</b> ideology. <br />Therefore, the <i>source</i> is readily available to work with. This gives other developers a chance to contribute to our project<br/>Remember that I accept only pull-requests")
                 .setIconGravity(MaterialAboutActionItem.GRAVITY_TOP)
                 .build()
         );
