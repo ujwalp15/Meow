@@ -1,18 +1,21 @@
 package ujwal.android.com.meow;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.joaquimley.faboptions.FabOptions;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -31,8 +34,22 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.squareup.picasso.Picasso;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.File;
+import java.util.List;
+
+import agency.tango.materialintroscreen.MaterialIntroActivity;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     private static final int PROFILE_SETTING = 100000;
 
     //save our header or result
@@ -41,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
     private IProfile profile;
 
+    private FabOptions mFabOptions;
+
+    private static final int REQUEST_CODE_CHOOSE = 23;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +69,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.camera);
+        mFabOptions = (FabOptions) findViewById(R.id.fab_options);
+        mFabOptions.setButtonsMenu(R.menu.menu_fab);
+        mFabOptions.setBackgroundColor(R.color.colorPrimary);
+        mFabOptions.setOnClickListener(this);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                MainActivity.this.startActivity(intent);
-            }
-        });
         new DrawerBuilder().withActivity(this).build();
 
         // Initialize and create the image loader logic
@@ -213,6 +230,60 @@ public class MainActivity extends AppCompatActivity {
             result.closeDrawer();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        mFabOptions.setButtonColor(R.id.fab_options_camera, R.color.md_white_1000);
+        mFabOptions.setButtonColor(R.id.fab_options_gallery, R.color.md_white_1000);
+        mFabOptions.setButtonColor(R.id.fab_options_favourite, R.color.md_white_1000);
+        mFabOptions.setButtonColor(R.id.fab_options_share, R.color.md_white_1000);
+        switch (view.getId()) {
+            case R.id.fab_options_camera:
+                mFabOptions.setButtonColor(R.id.fab_options_camera, R.color.colorAccent);
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                MainActivity.this.startActivity(intent);
+                break;
+
+            case R.id.fab_options_gallery:
+                mFabOptions.setButtonColor(R.id.fab_options_gallery, R.color.colorAccent);
+                Matisse.from(MainActivity.this)
+                        .choose(MimeType.allOf())
+                        .theme(R.style.Matisse_Dracula)
+                        .countable(true)
+                        .maxSelectable(1)
+                        .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                        .thumbnailScale(0.85f)
+                        .imageEngine(new PicassoEngine())
+                        .forResult(REQUEST_CODE_CHOOSE);
+                break;
+
+            case R.id.fab_options_favourite:
+                mFabOptions.setButtonColor(R.id.fab_options_favourite, R.color.colorAccent);
+                Toast.makeText(MainActivity.this, "Favourite", Toast.LENGTH_SHORT).show();
+                break;
+
+
+            case R.id.fab_options_share:
+                mFabOptions.setButtonColor(R.id.fab_options_share, R.color.colorAccent);
+                Toast.makeText(MainActivity.this, "Share", Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                // no-op
+        }
+    }
+
+    List<Uri> mSelected;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            mSelected = Matisse.obtainResult(data);
+            Toast.makeText(MainActivity.this, "mSelected: " + mSelected, Toast.LENGTH_SHORT).show();
         }
     }
 }

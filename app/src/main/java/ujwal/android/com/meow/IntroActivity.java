@@ -49,7 +49,7 @@ public class IntroActivity extends MaterialIntroActivity{
                 .buttonsColor(R.color.second_slide_buttons)
                 .image(R.drawable.cats)
                 .title("Take Picture")
-                .description("Click on the camera button and get started!")
+                .description("Click on the option fab and get started!")
                 .build());
 
         addSlide(new SlideFragmentBuilder()

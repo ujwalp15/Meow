@@ -60,6 +60,11 @@ dependencies {
     // Material intro screen
     compile 'agency.tango.android:material-intro-screen:0.0.5'
 
+    // Card Slider
     compile 'com.ramotion.cardslider:card-slider:0.1.0'
+
+    compile 'com.github.joaquimley:faboptions:1.1.2'
+
+    compile 'com.zhihu.android:matisse:0.4.3'
 
 }
