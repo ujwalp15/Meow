@@ -159,11 +159,22 @@ public class AboutApp {
 
         otherCardBuilder.addItem(new MaterialAboutActionItem.Builder()
                 .icon(new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_language_html5)
+                        .icon(CommunityMaterial.Icon.cmd_source_pull)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18))
                 .text("Contributions")
                 .subTextHtml("I believe in <b>Open-Source</b> ideology. <br />Therefore, the <i>source</i> is readily available to work with. This gives other developers a chance to contribute to our project<br/>Remember that I accept only pull-requests")
+                .setIconGravity(MaterialAboutActionItem.GRAVITY_TOP)
+                .build()
+        );
+
+        otherCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+                .icon(new IconicsDrawable(c)
+                        .icon(CommunityMaterial.Icon.cmd_copyright)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18))
+                .text("Image Copyright")
+                .subTextHtml("<a href=\"http://www.freepik.com/free-vector/cat-silhouette_718088.htm\">Designed by Freepik</a>")
                 .setIconGravity(MaterialAboutActionItem.GRAVITY_TOP)
                 .build()
         );
