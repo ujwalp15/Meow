@@ -2,10 +2,12 @@ package ujwal.android.com.meow;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
@@ -37,12 +39,8 @@ import com.squareup.picasso.Picasso;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
-import java.io.File;
 import java.util.List;
-
-import agency.tango.materialintroscreen.MaterialIntroActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -283,7 +281,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             mSelected = Matisse.obtainResult(data);
-            Toast.makeText(MainActivity.this, "mSelected: " + mSelected, Toast.LENGTH_SHORT).show();
+            String path = getURIPath(mSelected.get(0));
+            Toast.makeText(MainActivity.this, "mSelected: " + path, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    String getURIPath(Uri uriValue)
+    {
+        String[] mediaStoreProjection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(uriValue, mediaStoreProjection, null, null, null);
+        if (cursor != null){
+            int colIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String colIndexString=cursor.getString(colIndex);
+            cursor.close();
+            return colIndexString;
+        }
+        return null;
     }
 }
