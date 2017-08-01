@@ -92,14 +92,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName("Meow").withEmail("Recognize Cat Breed").withIcon(getResources().getDrawable(R.drawable.cat));
 
-        // Create the AccountHeader
-        buildHeader(false, savedInstanceState);
-
         //Create the drawer
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
+                .withHeader(R.layout.header) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         //here we use a customPrimaryDrawerItem we defined in our sample app
@@ -157,17 +154,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void buildHeader(boolean compact, Bundle savedInstanceState) {
-        // Create the AccountHeader
-        headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withHeaderBackground(R.drawable.header_cat)
-                .withCompactStyle(compact)
-                .addProfiles(profile)
-                .withSavedInstance(savedInstanceState)
-                .build();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -193,8 +179,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onSaveInstanceState(Bundle outState) {
         //add the values which need to be saved from the drawer to the bundle
         outState = result.saveInstanceState(outState);
-        //add the values which need to be saved from the accountHeader to the bundle
-        outState = headerResult.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
