@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         new SectionDrawerItem().withName(R.string.drawer_item_section_header),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_about).withIcon(GoogleMaterial.Icon.gmd_info_outline).withSelectable(false).withIdentifier(3),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withSelectedIconColor(Color.GRAY).withIconTintingEnabled(true).withIcon(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_account).actionBar().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withEnabled(false).withIdentifier(4),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(CommunityMaterial.Icon.cmd_help_circle_outline).withEnabled(false).withIdentifier(5),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(CommunityMaterial.Icon.cmd_help_circle_outline).withEnabled(true).withSelectable(false).withIdentifier(5),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_feedback).withIcon(FontAwesome.Icon.faw_paper_plane).withEnabled(true).withSelectable(false).withIdentifier(6)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
@@ -138,6 +138,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 intent = new Intent(MainActivity.this, BreedsActivity.class);
                             } else if (drawerItem.getIdentifier() == 3) {
                                 intent = new Intent(MainActivity.this, AboutActivity.class);
+                            } else if (drawerItem.getIdentifier() == 5) {
+                                IntroActivity.prefManager.setFirstTimeLaunch(true);
+                                intent = new Intent(MainActivity.this, IntroActivity.class);
+                                startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 6) {
                                 intent = new Intent(Intent.ACTION_SENDTO);
                                 intent.setData(Uri.parse("mailto:ujwalp09@gmail.com"));

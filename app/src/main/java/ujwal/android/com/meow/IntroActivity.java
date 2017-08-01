@@ -15,7 +15,7 @@ import agency.tango.materialintroscreen.animations.IViewTranslation;
 
 public class IntroActivity extends MaterialIntroActivity{
     private static final int PERMISSION_RQ = 84;
-    private PrefManager prefManager;
+    public static PrefManager prefManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
