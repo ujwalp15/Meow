@@ -1,13 +1,19 @@
 package ujwal.android.com.meow;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v13.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
@@ -17,18 +23,16 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.afollestad.materialcamera.MaterialCamera;
 import com.joaquimley.faboptions.FabOptions;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -40,6 +44,8 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -51,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int PROFILE_SETTING = 100000;
 
     //save our header or result
-    private AccountHeader headerResult = null;
     private Drawer result = null;
 
     private IProfile profile;
@@ -60,6 +65,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int REQUEST_CODE_CHOOSE = 23;
 
+    private static final int CAMERA_RQ = 6969;
+    private static final int PERMISSION_RQ = 84;
+
+    List<Uri> mSelected;
+
+    private boolean camera = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFabOptions.setButtonsMenu(R.menu.menu_fab);
         mFabOptions.setBackgroundColor(R.color.colorPrimary);
         mFabOptions.setOnClickListener(this);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Request permission to save videos in external storage
+            ActivityCompat.requestPermissions(
+                    this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_RQ);
+        }
 
         new DrawerBuilder().withActivity(this).build();
 
@@ -211,12 +229,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFabOptions.setButtonColor(R.id.fab_options_share, R.color.md_white_1000);
         switch (view.getId()) {
             case R.id.fab_options_camera:
+                camera=true;
                 mFabOptions.setButtonColor(R.id.fab_options_camera, R.color.colorAccent);
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                MainActivity.this.startActivity(intent);
+                captureImage();
                 break;
 
             case R.id.fab_options_gallery:
+                camera=false;
                 mFabOptions.setButtonColor(R.id.fab_options_gallery, R.color.colorAccent);
                 Matisse.from(MainActivity.this)
                         .choose(MimeType.allOf())
@@ -246,18 +265,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    List<Uri> mSelected;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
-            mSelected = Matisse.obtainResult(data);
-            String path = getURIPath(mSelected.get(0));
-            Toast.makeText(MainActivity.this, "mSelected: " + path, Toast.LENGTH_SHORT).show();
-        }
-    }
-
     String getURIPath(Uri uriValue)
     {
         String[] mediaStoreProjection = { MediaStore.Images.Media.DATA };
@@ -270,5 +277,96 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return colIndexString;
         }
         return null;
+    }
+
+    private void captureImage() {
+        File saveDir = null;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            // Only use external storage directory if permission is granted, otherwise cache directory is used by default
+            saveDir = new File(Environment.getExternalStorageDirectory(), "Meow");
+            saveDir.mkdirs();
+        }
+
+        MaterialCamera materialCamera =
+                new MaterialCamera(this)
+                        .saveDir(saveDir)
+                        .showPortraitWarning(true)
+                        .allowRetry(true)
+                        .defaultToFrontFacing(false)
+                        .allowRetry(true)
+                        .autoSubmit(false);
+
+        materialCamera
+                .stillShot() // launches the Camera in still shot mode
+                .labelConfirm(R.string.camera_option_use_picture);
+        materialCamera.start(CAMERA_RQ);
+    }
+
+    private String readableFileSize(long size) {
+        if (size <= 0) return size + " B";
+        final String[] units = new String[] {"B", "KB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.##").format(size / Math.pow(1024, digitGroups))
+                + " "
+                + units[digitGroups];
+    }
+
+    private String fileSize(File file) {
+        return readableFileSize(file.length());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(camera) {
+            // Received recording or error from MaterialCamera
+            if (requestCode == CAMERA_RQ) {
+                if (resultCode == RESULT_OK) {
+                    final File file = new File(data.getData().getPath());
+                    Toast.makeText(
+                            this,
+                            String.format("Saved to: %s, size: %s", file.getAbsolutePath(), fileSize(file)),
+                            Toast.LENGTH_LONG)
+                            .show();
+                    Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                    intent.putExtra("IMAGE_PATH", file.getAbsolutePath());
+                    MainActivity.this.startActivity(intent);
+                } else if (data != null) {
+                    Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
+                    if (e != null) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        MainActivity.this.startActivity(intent);
+                    }
+                }
+            }
+        } else {
+            if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+                mSelected = Matisse.obtainResult(data);
+                String path = getURIPath(mSelected.get(0));
+                Toast.makeText(MainActivity.this, "mSelected: " + path, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                intent.putExtra("IMAGE_PATH", path);
+                MainActivity.this.startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            // Sample was denied WRITE_EXTERNAL_STORAGE permission
+            Toast.makeText(
+                    this,
+                    "Photos will be saved in a cache directory instead of an external storage directory since permission was denied.",
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 }
