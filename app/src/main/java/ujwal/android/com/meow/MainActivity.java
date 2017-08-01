@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         new PrimaryDrawerItem().withName(R.string.drawer_item_breeds).withDescription("Supported cat breeds").withIcon(CommunityMaterial.Icon.cmd_cat).withSelectable(false).withIdentifier(2),
                         new SectionDrawerItem().withName(R.string.drawer_item_section_header),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_about).withIcon(GoogleMaterial.Icon.gmd_info_outline).withSelectable(false).withIdentifier(3),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withSelectedIconColor(Color.GRAY).withIconTintingEnabled(true).withIcon(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_account).actionBar().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withEnabled(false).withIdentifier(4),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(CommunityMaterial.Icon.cmd_help_circle_outline).withEnabled(true).withSelectable(false).withIdentifier(5),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_feedback).withIcon(FontAwesome.Icon.faw_paper_plane).withEnabled(true).withSelectable(false).withIdentifier(6)
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(CommunityMaterial.Icon.cmd_book_open_page_variant).withSelectable(false).withIdentifier(4),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(CommunityMaterial.Icon.cmd_help_circle_outline).withSelectable(false).withIdentifier(5),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_feedback).withIcon(FontAwesome.Icon.faw_paper_plane).withSelectable(false).withIdentifier(6)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
                     @Override
@@ -138,6 +138,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 intent = new Intent(MainActivity.this, BreedsActivity.class);
                             } else if (drawerItem.getIdentifier() == 3) {
                                 intent = new Intent(MainActivity.this, AboutActivity.class);
+                            } else if (drawerItem.getIdentifier() == 4) {
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/ujwalp15/Meow-ReadMe"));
+                                startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 5) {
                                 IntroActivity.prefManager.setFirstTimeLaunch(true);
                                 intent = new Intent(MainActivity.this, IntroActivity.class);
