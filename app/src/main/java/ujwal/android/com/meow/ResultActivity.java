@@ -3,6 +3,7 @@ package ujwal.android.com.meow;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
@@ -33,12 +35,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class ResultActivity extends AppCompatActivity {
 
     ImageView image;
     TextView t1,t2;
     int serverResponseCode = 0;
-    ProgressDialog dialog = null;
+    MaterialDialog dialog = null;
     String imagePath;
 
     String myJSON;
@@ -60,7 +64,9 @@ public class ResultActivity extends AppCompatActivity {
         t1 = findViewById(R.id.prediction1);
         t2 = findViewById(R.id.prediction2);
 
-        dialog = ProgressDialog.show(ResultActivity.this, "", "Uploading file...", true);
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this).title(R.string.progress_dialog_title_upload).content(R.string.progress_dialog_desc).progress(true, 0);
+        dialog = builder.build();
+        dialog.show();
         new Thread(new Runnable() {
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -136,7 +142,7 @@ public class ResultActivity extends AppCompatActivity {
             if(serverResponseCode == 200){
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(ResultActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                        Toasty.success(ResultActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT,true).show();
                     }
                 });
                 getData();
@@ -152,7 +158,7 @@ public class ResultActivity extends AppCompatActivity {
             ex.printStackTrace();
             this.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(ResultActivity.this, "MalformedURLException", Toast.LENGTH_SHORT).show();
+                    Toasty.error(ResultActivity.this, "MalformedURLException", Toast.LENGTH_SHORT,true).show();
                 }
             });
             Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
@@ -161,12 +167,20 @@ public class ResultActivity extends AppCompatActivity {
             e.printStackTrace();
             this.runOnUiThread(new Runnable() {
                 public void run() {
-                Toast.makeText(ResultActivity.this, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(ResultActivity.this, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT,true).show();
                 }
             });
             Log.e("Upload file failed", "Exception : " + e.getMessage(), e);
         }
         dialog.dismiss();
+        final MaterialDialog.Builder builder1 = new MaterialDialog.Builder(this).title(R.string.progress_dialog_title_fetch).content(R.string.progress_dialog_desc).progress(true, 0);
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                dialog = builder1.build();
+                dialog.show();
+            }
+        });
+
         return serverResponseCode;
     }
 
@@ -209,7 +223,7 @@ public class ResultActivity extends AppCompatActivity {
         myJSON=result;
         showList();
         }
-    }
+        }
         GetDataJSON g = new GetDataJSON();
         g.execute();
     }
@@ -228,12 +242,21 @@ public class ResultActivity extends AppCompatActivity {
                 cat_breed.add(id);
                 cat_value.add(value);
             }
-            Picasso.with(this).load(new File(imagePath)).into(image);
-            String could_be = cat_breed.get(0) +" "+ cat_value.get(0);
-            String could_be_2 = cat_breed.get(1) +" "+ cat_value.get(1);
+            final String could_be = cat_breed.get(0) +" "+ cat_value.get(0);
+            final String could_be_2 = cat_breed.get(1) +" "+ cat_value.get(1);
 
-            t1.setText(could_be);
-            t2.setText(could_be_2);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    Picasso.with(ResultActivity.this).load(new File(imagePath)).into(image);
+                    t1.setText(could_be);
+                    t2.setText(could_be_2);
+                    dialog.dismiss();
+                }
+            }, 3000);
+
             } catch (JSONException e) {
             e.printStackTrace();
         }

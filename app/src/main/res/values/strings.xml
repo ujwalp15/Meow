@@ -23,6 +23,10 @@
     <string name="text4">Manx cats are best known as being entirely tailless, along with elongated hind legs and a rounded head.</string>
     <string name="text5">The Abyssinian is a slender, fine-boned, medium-sized cat. They have alert, relatively large pointed ears.</string>
 
+    <string name="progress_dialog_title_upload">Uploading image to server</string>
+    <string name="progress_dialog_title_fetch">Computing result</string>
+    <string name="progress_dialog_desc">Sit back and relax</string>
+
     <string name="intro_item_check_to_pass">Meh! Just let me use the app!</string>
     <string name="intro_item_error_message">Please accept terms and conditions first.</string>
     <string name="intro_item_privacy">Privacy Policy</string>

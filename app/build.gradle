@@ -71,6 +71,12 @@ dependencies {
     // Image Picker
     compile 'com.zhihu.android:matisse:0.4.3'
 
+    // Material Dialog
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
+
+    // Material Toast
+    compile 'com.github.GrenderG:Toasty:1.2.5'
+
 }
 
 android {

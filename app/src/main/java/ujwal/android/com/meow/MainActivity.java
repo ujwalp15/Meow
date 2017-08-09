@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v13.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -47,6 +48,8 @@ import com.zhihu.matisse.engine.impl.PicassoEngine;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -251,13 +254,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.fab_options_favourite:
                 mFabOptions.setButtonColor(R.id.fab_options_favourite, R.color.colorAccent);
-                Toast.makeText(MainActivity.this, "Favourite", Toast.LENGTH_SHORT).show();
+                Toasty.Config.getInstance()
+                        .setInfoColor(getResources().getColor(R.color.fourth_slide_background)).apply();
+                Toasty.info(MainActivity.this, "Favourite", Toast.LENGTH_SHORT,true).show();
                 break;
 
 
             case R.id.fab_options_share:
                 mFabOptions.setButtonColor(R.id.fab_options_share, R.color.colorAccent);
-                Toast.makeText(MainActivity.this, "Share", Toast.LENGTH_SHORT).show();
+                Toasty.info(MainActivity.this, "Share", Toast.LENGTH_SHORT,true).show();
                 break;
 
             default:
@@ -347,7 +352,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
                 mSelected = Matisse.obtainResult(data);
                 String path = getURIPath(mSelected.get(0));
-                Toast.makeText(MainActivity.this, "mSelected: " + path, Toast.LENGTH_SHORT).show();
+                Toasty.Config.getInstance()
+                        .setInfoColor(getResources().getColor(R.color.fourth_slide_background)).apply();
+                Toasty.info(MainActivity.this, "mSelected: " + path, Toast.LENGTH_SHORT,true).show();
                 Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                 intent.putExtra("IMAGE_PATH", path);
                 MainActivity.this.startActivity(intent);
@@ -362,10 +369,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             // Sample was denied WRITE_EXTERNAL_STORAGE permission
-            Toast.makeText(
+            Toasty.Config.getInstance()
+                    .setInfoColor(getResources().getColor(R.color.fourth_slide_background)).apply();
+            Toasty.info(
                     this,
                     "Photos will be saved in a cache directory instead of an external storage directory since permission was denied.",
-                    Toast.LENGTH_LONG)
+                    Toast.LENGTH_LONG,
+                    true)
                     .show();
         }
     }

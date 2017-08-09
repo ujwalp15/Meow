@@ -65,7 +65,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:textSize="14sp"
-            android:text="Prediction 1" />
+            />
     </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -103,7 +103,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="8dp"
                 android:textSize="14sp"
-                android:text="Prediction 2"
                 android:textColor="@color/md_white_1000"
                 android:layout_below="@+id/textView3"
                 android:layout_centerHorizontal="true" />

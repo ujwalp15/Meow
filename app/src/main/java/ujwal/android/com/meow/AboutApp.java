@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.v4.content.ContextCompat;
 
 import com.danielstone.materialaboutlibrary.ConvenienceBuilder;
@@ -224,11 +225,29 @@ public class AboutApp {
                 "material-intro-screen", "2016", "Tango Agency",
                 OpenSourceLicense.MIT);
 
+        MaterialAboutCard dialogLicenseCard = ConvenienceBuilder.createLicenseCard(c,
+                new IconicsDrawable(c)
+                        .icon(GoogleMaterial.Icon.gmd_book)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18),
+                "material-dialog", "2016", "Aidan Follestad",
+                OpenSourceLicense.MIT);
+
+        MaterialAboutCard toastLicenseCard = ConvenienceBuilder.createLicenseCard(c,
+                new IconicsDrawable(c)
+                        .icon(GoogleMaterial.Icon.gmd_book)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18),
+                "toasty", "2016", "GrenderG",
+                OpenSourceLicense.GNU_GPL_3);
+
         return new MaterialAboutList(materialAboutLibraryLicenseCard,
                 androidIconicsLicenseCard,
                 PicassoLicenseCard,
                 cameraLicenseCard,
-                introLicenseCard
+                introLicenseCard,
+                dialogLicenseCard,
+                toastLicenseCard
                 );
     }
 }
