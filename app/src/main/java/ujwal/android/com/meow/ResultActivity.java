@@ -81,7 +81,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     public int uploadFile(String sourceFileUri) {
-        String upLoadServerUri = "http://192.168.43.169/upload_media_test.php";
+        String upLoadServerUri = "http://245c274a.ngrok.io/upload_media_test.php";
         String fileName = sourceFileUri;
 
         HttpURLConnection conn = null;
@@ -189,7 +189,7 @@ public class ResultActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-            HttpPost httppost = new HttpPost("http://192.168.43.169/experiments/run.php");
+            HttpPost httppost = new HttpPost("http://245c274a.ngrok.io/experiments/run.php");
 
             // Depends on your web service
             httppost.setHeader("Content-type", "application/json");
