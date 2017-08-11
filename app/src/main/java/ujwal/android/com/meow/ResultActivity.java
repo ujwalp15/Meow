@@ -1,13 +1,18 @@
 package ujwal.android.com.meow;
 
+import android.animation.Animator;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +46,7 @@ public class ResultActivity extends AppCompatActivity {
 
     ImageView image;
     TextView t1,t2;
+    CardView c1,c2,c3;
     int serverResponseCode = 0;
     MaterialDialog dialog = null;
     String imagePath;
@@ -63,6 +69,13 @@ public class ResultActivity extends AppCompatActivity {
         image = findViewById(R.id.imageView);
         t1 = findViewById(R.id.prediction1);
         t2 = findViewById(R.id.prediction2);
+        c1 = findViewById(R.id.cardView);
+        c2 = findViewById(R.id.cardView1);
+        c3 = findViewById(R.id.cardView2);
+
+        c1.setVisibility(View.INVISIBLE);
+        c2.setVisibility(View.INVISIBLE);
+        c3.setVisibility(View.INVISIBLE);
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this).title(R.string.progress_dialog_title_upload).content(R.string.progress_dialog_desc).progress(true, 0);
         dialog = builder.build();
@@ -81,7 +94,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     public int uploadFile(String sourceFileUri) {
-        String upLoadServerUri = "http://245c274a.ngrok.io/upload_media_test.php";
+        String upLoadServerUri = "http://ujwalp15.pagekite.me/upload_media_test.php";
         String fileName = sourceFileUri;
 
         HttpURLConnection conn = null;
@@ -189,7 +202,7 @@ public class ResultActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-            HttpPost httppost = new HttpPost("http://245c274a.ngrok.io/experiments/run.php");
+            HttpPost httppost = new HttpPost("http://ujwalp15.pagekite.me/experiments/run.php");
 
             // Depends on your web service
             httppost.setHeader("Content-type", "application/json");
@@ -254,6 +267,7 @@ public class ResultActivity extends AppCompatActivity {
                     t1.setText(could_be);
                     t2.setText(could_be_2);
                     dialog.dismiss();
+                    showResult();
                 }
             }, 3000);
 
@@ -261,6 +275,39 @@ public class ResultActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    void showResult() {
+        c1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                revealEffect(c1);
+            }
+        },300);
+
+        c2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                revealEffect(c2);
+            }
+        },600);
+
+        c3.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                revealEffect(c3);
+            }
+        },900);
+    }
+
+    void revealEffect(View v) {
+        int cx = v.getMeasuredWidth()/2;
+        int cy = v.getMeasuredHeight()/2;
+        int finalRadius = Math.max(v.getWidth(),v.getHeight());
+        Animator a = ViewAnimationUtils.createCircularReveal(v,cx,cy,0,finalRadius);
+        a.setDuration(1000);
+        v.setVisibility(View.VISIBLE);
+        a.start();
     }
 
     @Override
