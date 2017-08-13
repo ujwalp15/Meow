@@ -9,11 +9,11 @@
     tools:context="ujwal.android.com.meow.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:src="@drawable/background_cats"
-        android:layout_above="@+id/textview1"
+        android:src="@drawable/background_cat"
+        android:layout_margin="10dp"
         />
 
     <TextView

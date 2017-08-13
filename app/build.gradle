@@ -81,6 +81,8 @@ dependencies {
         transitive = true
     }
 
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+
 }
 
 android {
