@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#26292A</color>
     <color name="colorAccent">#8a9195</color>
 
+    <color name="colorMap">#27303f</color>
+
     <color name="colorLightBar">#FFFFFF</color>
     <color name="colorLightStatus">#9E9E9E</color>
 

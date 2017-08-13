@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
     android:clipChildren="false">
 
     <RelativeLayout
@@ -25,6 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textSize="28sp"
+                android:textColor="@color/md_white_1000"
                 android:textStyle="bold" />
 
             <TextView
@@ -33,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="28sp"
                 android:textStyle="bold"
+                android:textColor="@color/md_white_1000"
                 android:layout_gravity="center_vertical"/>
 
         </FrameLayout>
@@ -103,7 +106,7 @@
             android:id="@+id/gradient_top"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@android:color/white"/>
+            android:background="@color/colorPrimaryDark"/>
 
         <View
             android:layout_width="match_parent"
