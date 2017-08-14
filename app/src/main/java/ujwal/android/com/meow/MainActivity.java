@@ -1,6 +1,7 @@
 package ujwal.android.com.meow;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
+import com.heinrichreimersoftware.androidissuereporter.IssueReporterLauncher;
 import com.joaquimley.faboptions.FabOptions;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -173,9 +175,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 intent = new Intent(MainActivity.this, IntroActivity.class);
                                 startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 6) {
-                                intent = new Intent(Intent.ACTION_SENDTO);
-                                intent.setData(Uri.parse("mailto:ujwalp09@gmail.com"));
-                                startActivity(intent);
+                                IssueReporterLauncher.forTarget("ujwalp15", "Meow-ReadMe")
+                                        // [Recommended] Theme to use for the reporter.
+                                        // (See #theming for further information.)
+                                        .theme(R.style.Theme_App_Dark)
+                                        // [Optional] Auth token to open issues if users don't have a GitHub account
+                                        // You can register a bot account on GitHub and copy ist OAuth2 token here.
+                                        // (See #how-to-create-a-bot-key for further information.)
+                                        .guestToken("28f479f73db97d912611b27579aad7a76ad2baf5")
+                                        // [Optional] Force users to enter an email address when the report is sent using
+                                        // the guest token.
+                                        .guestEmailRequired(true)
+                                        // [Optional] Set a minimum character limit for the description to filter out
+                                        // empty reports.
+                                        .minDescriptionLength(20)
+                                        // [Optional] Include other relevant info in the bug report (like custom variables)
+                                        .putExtraInfo("Test 1", "Example string")
+                                        .putExtraInfo("Test 2", true)
+                                        // [Optional] Disable back arrow in toolbar
+                                        .homeAsUpEnabled(true)
+                                        .launch(MainActivity.this);
                             } else if (drawerItem.getIdentifier() == 8) {
                                 intent = new Intent(MainActivity.this, LicenseActivity.class);
                             }
@@ -183,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 MainActivity.this.startActivity(intent);
                             }
                         }
-
                         return false;
                     }
                 })

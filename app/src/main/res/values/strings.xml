@@ -10,7 +10,7 @@
     <string name="drawer_item_help">Demo</string>
     <string name="drawer_item_open_source">Open Source</string>
     <string name="drawer_item_contact">Readme</string>
-    <string name="drawer_item_feedback">Feedback</string>
+    <string name="drawer_item_feedback">Report</string>
     <string name="drawer_item_license">License</string>
 
     <string name="camera_option_retry">Retry</string>

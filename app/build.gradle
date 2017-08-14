@@ -81,9 +81,14 @@ dependencies {
         transitive = true
     }
 
+    // Gif support
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 
+    // Material Dialogs
     compile 'com.github.javiersantos:MaterialStyledDialogs:2.1'
+
+    // Feedback
+    compile 'com.heinrichreimersoftware:android-issue-reporter:1.3.1'
 
 }
 

@@ -93,4 +93,10 @@
         <item name="android:textColor">@color/md_white_1000</item>
     </style>
 
+    <style name="Theme.App.Dark" parent="Theme.IssueReporter">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 </resources>
