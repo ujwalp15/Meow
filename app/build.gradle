@@ -83,6 +83,8 @@ dependencies {
 
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 
+    compile 'com.github.javiersantos:MaterialStyledDialogs:2.1'
+
 }
 
 android {

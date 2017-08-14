@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,10 +26,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.afollestad.materialcamera.MaterialCamera;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.joaquimley.faboptions.FabOptions;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -254,9 +260,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.fab_options_favourite:
                 mFabOptions.setButtonColor(R.id.fab_options_favourite, R.color.colorAccent);
-                Toasty.Config.getInstance()
-                        .setInfoColor(getResources().getColor(R.color.fourth_slide_background)).apply();
-                Toasty.info(MainActivity.this, "Favourite", Toast.LENGTH_SHORT,true).show();
+                final MaterialStyledDialog.Builder dialogHeader = new MaterialStyledDialog.Builder(this)
+                        .setIcon(new IconicsDrawable(this).icon(CommunityMaterial.Icon.cmd_google_play).color(Color.WHITE))
+                        .withDialogAnimation(true)
+                        .setTitle("Awesome!")
+                        .setDescription("Glad to see you like Meow! If you're up for it, I would really appreciate you reviewing it.")
+                        .setHeaderColor(R.color.primary)
+                        .setPositiveText("Google Play")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                Toasty.info(MainActivity.this,"App will be available soon on play store",Toast.LENGTH_SHORT,true).show();
+                            }
+                        })
+                        .setNegativeText("Later");
+                dialogHeader.show();
+
                 break;
 
 
