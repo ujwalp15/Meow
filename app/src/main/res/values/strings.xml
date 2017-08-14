@@ -22,6 +22,10 @@
     <string name="text3">The Burmese is a slender, long-bodied cat with a wedge-shaped head, large pointed ears, long tapering muzzle and moderately almond-shaped eyes.</string>
     <string name="text4">Manx cats are best known as being entirely tailless, along with elongated hind legs and a rounded head.</string>
     <string name="text5">The Abyssinian is a slender, fine-boned, medium-sized cat. They have alert, relatively large pointed ears.</string>
+    <string name="text6">Turkish Angora cats have long, silky coats and elegant, sinuous bodies.</string>
+    <string name="text7">A tabby is any domestic cat that has a coat featuring distinctive stripes, dots, lines or swirling patterns.</string>
+    <string name="text8">Tortoiseshell cats have particolored coats with patches of various shades of red and black, and sometimes white.</string>
+    <string name="text9">They are often called house cats when kept as indoor pets or simply cats when there is no need to distinguish them from other felids and felines.</string>
 
     <string name="progress_dialog_title_upload">Uploading image to server</string>
     <string name="progress_dialog_title_fetch">Computing result</string>

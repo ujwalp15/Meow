@@ -36,15 +36,15 @@ import ujwal.android.com.meow.utils.DecodeBitmapTask;
 
 public class BreedsActivity extends AppCompatActivity {
     
-    private final int[][] dotCoords = new int[5][2];
-    private final int[] pics = {R.drawable.persian, R.drawable.siamese, R.drawable.burmese, R.drawable.manx, R.drawable.abyssinian};
+    private final int[][] dotCoords = new int[9][2];
+    private final int[] pics = {R.drawable.persian, R.drawable.siamese, R.drawable.burmese, R.drawable.manx, R.drawable.abyssinian,R.drawable.angora,R.drawable.tabby,R.drawable.tortoiseshell,R.drawable.domestic};
     private final int[] maps = {R.drawable.map_iran, R.drawable.map_thailand, R.drawable.map_burma, R.drawable.map_isleofman, R.drawable.map_egypt};
-    private final int[] descriptions = {R.string.text1, R.string.text2, R.string.text3, R.string.text4, R.string.text5};
-    private final String[] breeds = {"Persian", "Siemese", "Burmese", "Manx", "Absyssinian"};
-    private final String[] names = {"Persian Longhair", "Meezer", "Thongdaeng", "Manks", "Abyssinia"};
-    private final String[] lifespan = {"15 yrs", "20 yrs", "15 yrs", "10 yrs", "12 yrs"};
-    private final String[] origin = {"Iran", "Thailand", "Myanmar","Isle of Man","Egypt"};
-    private final SliderAdapter sliderAdapter = new SliderAdapter(pics, 5, new OnCardClickListener());
+    private final int[] descriptions = {R.string.text1, R.string.text2, R.string.text3, R.string.text4, R.string.text5,R.string.text6,R.string.text7,R.string.text8,R.string.text9};
+    private final String[] breeds = {"Persian", "Siemese", "Burmese", "Manx", "Absyssinian", "Angora", "Tabby", "Tortoiseshell", "Domestic"};
+    private final String[] names = {"Purebred", "Purebred", "Purebred", "Purebred", "Purebred", "Purebred", "Domestic", "Domestic", "Domestic"};
+    private final String[] lifespan = {"15 yrs", "20 yrs", "15 yrs", "10 yrs", "12 yrs", "15 yrs", "17 yrs", "15 yrs", "~ yrs"};
+    private final String[] origin = {"Iran", "Thailand", "Myanmar","Isle of Man","Egypt", "Turkey", "England", "House","House"};
+    private final SliderAdapter sliderAdapter = new SliderAdapter(pics, 9, new OnCardClickListener());
     private CardSliderLayoutManager layoutManger;
     private RecyclerView recyclerView;
     private ImageSwitcher mapSwitcher;
@@ -53,7 +53,6 @@ public class BreedsActivity extends AppCompatActivity {
     private TextSwitcher clockSwitcher;
     private TextSwitcher descriptionsSwitcher;
     private View greenDot;
-
     private TextView country1TextView;
     private TextView country2TextView;
     private int countryOffset1;
