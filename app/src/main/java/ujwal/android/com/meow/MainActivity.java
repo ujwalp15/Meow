@@ -8,10 +8,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v13.app.ActivityCompat;
@@ -65,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    private static final int PROFILE_SETTING = 100000;
-
     //save our header or result
     private Drawer result = null;
 
@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int CAMERA_RQ = 6969;
     private static final int PERMISSION_RQ = 84;
 
+    MaterialStyledDialog.Builder dialogHeader = null;
+
     List<Uri> mSelected;
 
     private boolean camera = true;
@@ -88,6 +90,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        dialogHeader = new MaterialStyledDialog.Builder(this)
+                .setIcon(new IconicsDrawable(this).icon(CommunityMaterial.Icon.cmd_alert_circle).color(Color.WHITE))
+                .withDialogAnimation(true)
+                .setTitle("Oops! No Internet!")
+                .setDescription("Meow requires internet connection to function properly.")
+                .setHeaderColor(R.color.md_red_600)
+                .setCancelable(false)
+                .setPositiveText("Turn ON")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        startActivity(new Intent(Settings.ACTION_SETTINGS));
+                    }
+                })
+                .setNegativeText("Quit")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        System.exit(0);
+                    }
+                });
+
+        if(!isNetworkAvailable(this))
+        {
+            dialogHeader.show();
+        }
 
         mFabOptions = (FabOptions) findViewById(R.id.fab_options);
         mFabOptions.setButtonsMenu(R.menu.menu_fab);
@@ -231,6 +259,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }*/
 
+    public static boolean isNetworkAvailable(Context ctx) {
+        ConnectivityManager connMgr = (ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return (connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() ||
+                connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected());
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //add the values which need to be saved from the drawer to the bundle
@@ -293,9 +327,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         })
                         .setNegativeText("Later");
                 dialogHeader.show();
-
                 break;
-
 
             case R.id.fab_options_share:
                 mFabOptions.setButtonColor(R.id.fab_options_share, R.color.colorAccent);
@@ -366,6 +398,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Received recording or error from MaterialCamera
             if (requestCode == CAMERA_RQ) {
                 if (resultCode == RESULT_OK) {
+                    if(!isNetworkAvailable(this))
+                    {
+                        dialogHeader.show();
+                    }
                     final File file = new File(data.getData().getPath());
                     Toast.makeText(
                             this,
@@ -387,6 +423,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else {
             if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+                if(!isNetworkAvailable(this))
+                {
+                    dialogHeader.show();
+                }
                 mSelected = Matisse.obtainResult(data);
                 String path = getURIPath(mSelected.get(0));
                 Toasty.Config.getInstance()
