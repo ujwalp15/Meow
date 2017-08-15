@@ -94,7 +94,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     public int uploadFile(String sourceFileUri) {
-        String upLoadServerUri = "http://ujwalp15.pagekite.me/upload_media_test.php";
+        String upLoadServerUri = "http://18.220.112.215/upload_media_test.php";
         String fileName = sourceFileUri;
 
         HttpURLConnection conn = null;
@@ -180,7 +180,7 @@ public class ResultActivity extends AppCompatActivity {
             e.printStackTrace();
             this.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toasty.error(ResultActivity.this, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT,true).show();
+                    Toasty.error(ResultActivity.this, "Upload Failed!", Toast.LENGTH_SHORT,true).show();
                 }
             });
             Log.e("Upload file failed", "Exception : " + e.getMessage(), e);
@@ -202,7 +202,7 @@ public class ResultActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-            HttpPost httppost = new HttpPost("http://ujwalp15.pagekite.me/experiments/run.php");
+            HttpPost httppost = new HttpPost("http://18.220.112.215/experiments/run.php");
 
             // Depends on your web service
             httppost.setHeader("Content-type", "application/json");
