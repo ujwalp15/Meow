@@ -37,24 +37,24 @@ public class IntroActivity extends MaterialIntroActivity{
                 });
 
         addSlide(new SlideFragmentBuilder()
-                        .backgroundColor(R.color.first_slide_background)
-                        .buttonsColor(R.color.first_slide_buttons)
-                        .image(R.drawable.cat_intro)
+                        .backgroundColor(R.color.primary_dark)
+                        .buttonsColor(R.color.primary)
+                        .image(R.drawable.cat)
                         .title("Meow")
                         .description("Recognize breed of cats by just clicking its picture!")
                         .build());
 
         addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.second_slide_background)
-                .buttonsColor(R.color.second_slide_buttons)
-                .image(R.drawable.cats)
+                .backgroundColor(R.color.primary_dark)
+                .buttonsColor(R.color.primary)
+                .image(R.drawable.cat2)
                 .title("Take Picture")
                 .description("Click on the option fab and get started!")
                 .build());
 
         addSlide(new SlideFragmentBuilder()
-                        .backgroundColor(R.color.third_slide_background)
-                        .buttonsColor(R.color.third_slide_buttons)
+                        .backgroundColor(R.color.primary_dark)
+                        .buttonsColor(R.color.primary)
                         .possiblePermissions(new String[]{Manifest.permission.INTERNET})
                         .neededPermissions(new String[]{Manifest.permission.CAMERA})
                         .image(R.drawable.camera)
@@ -69,12 +69,12 @@ public class IntroActivity extends MaterialIntroActivity{
                 }, "Grant Permission"));
 
         addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.fourth_slide_background)
-                .buttonsColor(R.color.fourth_slide_buttons)
-                .image(R.drawable.storage)
+                .backgroundColor(R.color.primary_dark)
+                .buttonsColor(R.color.primary)
+                .image(R.drawable.process)
                 .neededPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE})
-                .title("Storage")
-                .description("To save a picture, I need permission to write to external storage")
+                .title("Processing")
+                .description("Once picture is taken, let us process the image and predict the breed")
                 .build(),
                 new MessageButtonBehaviour(new View.OnClickListener() {
                     @Override
@@ -83,7 +83,13 @@ public class IntroActivity extends MaterialIntroActivity{
                     }
                 }, "Grant Permission"));
 
-        addSlide(new CustomSlide());
+        addSlide(new SlideFragmentBuilder()
+                .backgroundColor(R.color.primary_dark)
+                .buttonsColor(R.color.primary)
+                .image(R.drawable.cat3)
+                .title("Thank you")
+                .description("Thank you for installing Meow!")
+                .build());
     }
 
     private void launchHomeScreen() {
